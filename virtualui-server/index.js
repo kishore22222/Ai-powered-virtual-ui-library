@@ -13,8 +13,13 @@ dotenv.config()
 
 const app = express()
 
-app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:5174"],
+
+ app.use(cors({
+  origin: [
+    "http://localhost:5173", 
+    "http://localhost:5174",
+    "https://ai-powered-virtual-ui-library-front.onrender.com",  // ✅ exact frontend URL
+  ],
   credentials: true
 }));
 
