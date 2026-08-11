@@ -1,0 +1,25 @@
+{
+  "name": "kishore-virtual-ui-library",
+  "version": "1.0.21",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "keywords": [],
+  "author": "Kishore",
+  "license": "ISC",
+  "description": "Virtual UI React Component Library",
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  }
+}
