@@ -7,7 +7,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup"
+    "build": "npx tsup"
   },
   "keywords": [],
   "author": "Kishore",
