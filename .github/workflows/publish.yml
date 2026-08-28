@@ -21,7 +21,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: virtualui-lib
-        run: npm ci
+        run: npm install
 
       - name: Sync components from API
         working-directory: virtualui-lib
