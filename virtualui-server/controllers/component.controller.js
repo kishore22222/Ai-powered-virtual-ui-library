@@ -1,5 +1,6 @@
 import Component from "../models/component.model.js"
 import User from "../models/user.model.js"
+import axios from "axios"
 
 
 export const saveComponent = async (req, res) => {
@@ -61,12 +62,38 @@ export const publishComponent = async (req, res) => {
             return res.status(403).json({ message: "You can only publish your own components" })
         }
 
-        // Just update DB — run npm publish manually from your local machine
         component.visibility = "public"
-        component.npmPackage = "kishore-virtual-ui-library"
+        component.npm = "kishore-virtual-ui-library"
         await component.save()
 
-        return res.status(200).json({ message: "Component published successfully" })
+        // Trigger the GitHub Actions workflow (publish.yml) to rebuild + republish
+        // the npm package. The component must be "public" BEFORE dispatching,
+        // because the workflow's sync.js only fetches public components.
+        if (process.env.GITHUB_PAT) {
+            try {
+                await axios.post(
+                    "https://api.github.com/repos/kishore22222/Ai-powered-virtual-ui-library/actions/workflows/publish.yml/dispatches",
+                    { ref: "main" },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${process.env.GITHUB_PAT}`,
+                            Accept: "application/vnd.github+json",
+                            "X-GitHub-Api-Version": "2022-11-28",
+                        },
+                    }
+                )
+            } catch (triggerError) {
+                console.error("Failed to trigger GitHub Actions publish:", triggerError?.response?.data || triggerError.message)
+                return res.status(500).json({
+                    message: "Component is now public, but failed to trigger the npm build. Check the GITHUB_PAT environment variable.",
+                    error: triggerError?.response?.data?.message || triggerError.message,
+                })
+            }
+        } else {
+            console.warn("GITHUB_PAT is not set — component saved as public but npm publish was NOT triggered.")
+        }
+
+        return res.status(200).json({ message: "Component published successfully. npm publish triggered." })
 
     } catch (error) {
         console.log(error)
