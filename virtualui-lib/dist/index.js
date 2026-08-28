@@ -35,27 +35,272 @@ __export(index_exports, {
   Badge: () => Badge,
   BlogCard: () => BlogCard,
   Breadcrumb: () => Breadcrumb,
+  Calculator: () => Calculator,
+  Calendar: () => Calendar,
+  CountdownTimer: () => CountdownTimer,
+  DarkToggle: () => DarkToggle,
   Form: () => Form,
   NotificationCard: () => NotificationCard,
   Pagination: () => Pagination,
   ProgressBar: () => ProgressBar,
+  Switch: () => Switch,
   Tabs: () => Tabs,
   TestimonialCard: () => TestimonialCard,
   Toast: () => Toast,
   Toggle: () => Toggle,
+  ToggleLight: () => ToggleLight,
   Tooltip: () => Tooltip
 });
 module.exports = __toCommonJS(index_exports);
 
-// src/components/Form/Form.jsx
+// src/components/Calculator/Calculator.jsx
 var import_react = __toESM(require("react"));
+var Calculator = ({
+  bg = "#0f172a",
+  buttonColor = "#6366f1",
+  buttonTextColor = "#fff",
+  displayColor = "#fff"
+}) => {
+  const [input, setInput] = (0, import_react.useState)("");
+  const [result, setResult] = (0, import_react.useState)("");
+  const handleButtonClick = (value) => {
+    setInput(input + value);
+  };
+  const calculateResult = () => {
+    try {
+      setResult(eval(input));
+      setInput("");
+    } catch (error) {
+      setResult("Error");
+    }
+  };
+  const clearInput = () => {
+    setInput("");
+    setResult("");
+  };
+  return /* @__PURE__ */ import_react.default.createElement("div", { style: {
+    background: bg,
+    borderRadius: "20px",
+    padding: "20px",
+    width: "300px",
+    boxShadow: "0 10px 40px rgba(0,0,0,0.4)",
+    fontFamily: "system-ui, sans-serif"
+  } }, /* @__PURE__ */ import_react.default.createElement("div", { style: {
+    background: displayColor,
+    borderRadius: "12px",
+    padding: "10px",
+    marginBottom: "10px",
+    fontSize: "24px",
+    color: buttonTextColor,
+    textAlign: "right"
+  } }, result || input || "0"), /* @__PURE__ */ import_react.default.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px" } }, ["7", "8", "9", "/"].map((item) => /* @__PURE__ */ import_react.default.createElement("button", { key: item, onClick: () => handleButtonClick(item), style: {
+    background: buttonColor,
+    color: buttonTextColor,
+    padding: "15px",
+    borderRadius: "10px",
+    border: "none",
+    cursor: "pointer",
+    fontSize: "18px"
+  } }, item)), ["4", "5", "6", "*"].map((item) => /* @__PURE__ */ import_react.default.createElement("button", { key: item, onClick: () => handleButtonClick(item), style: {
+    background: buttonColor,
+    color: buttonTextColor,
+    padding: "15px",
+    borderRadius: "10px",
+    border: "none",
+    cursor: "pointer",
+    fontSize: "18px"
+  } }, item)), ["1", "2", "3", "-"].map((item) => /* @__PURE__ */ import_react.default.createElement("button", { key: item, onClick: () => handleButtonClick(item), style: {
+    background: buttonColor,
+    color: buttonTextColor,
+    padding: "15px",
+    borderRadius: "10px",
+    border: "none",
+    cursor: "pointer",
+    fontSize: "18px"
+  } }, item)), ["0", ".", "=", "+"].map((item) => /* @__PURE__ */ import_react.default.createElement("button", { key: item, onClick: () => item === "=" ? calculateResult() : handleButtonClick(item), style: {
+    background: buttonColor,
+    color: buttonTextColor,
+    padding: "15px",
+    borderRadius: "10px",
+    border: "none",
+    cursor: "pointer",
+    fontSize: "18px"
+  } }, item)), /* @__PURE__ */ import_react.default.createElement("button", { onClick: clearInput, style: {
+    background: buttonColor,
+    color: buttonTextColor,
+    padding: "15px",
+    borderRadius: "10px",
+    border: "none",
+    cursor: "pointer",
+    fontSize: "18px",
+    gridColumn: "span 4"
+  } }, "Clear")));
+};
+
+// src/components/Calendar/Calendar.jsx
+var import_react2 = __toESM(require("react"));
+var Calendar = ({
+  month = (/* @__PURE__ */ new Date()).toLocaleString("default", { month: "long" }),
+  year = (/* @__PURE__ */ new Date()).getFullYear(),
+  accent = "#6366f1",
+  bg: bg2 = "#0f172a"
+}) => {
+  const daysInMonth = (month2, year2) => new Date(year2, new Date(Date.parse(month2 + " 1, " + year2)).getMonth() + 1, 0).getDate();
+  const firstDayOfMonth = (month2, year2) => new Date(year2, new Date(Date.parse(month2 + " 1, " + year2)).getMonth(), 1).getDay();
+  const totalDays = daysInMonth(month, year);
+  const firstDay = firstDayOfMonth(month, year);
+  const days = [];
+  for (let i = 0; i < firstDay; i++) {
+    days.push(/* @__PURE__ */ import_react2.default.createElement("div", { key: `empty-${i}`, style: { width: "40px", height: "40px" } }));
+  }
+  for (let i = 1; i <= totalDays; i++) {
+    days.push(/* @__PURE__ */ import_react2.default.createElement("div", { key: i, style: { width: "40px", height: "40px", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "10px", background: bg2, color: accent, margin: "2px" } }, i));
+  }
+  return /* @__PURE__ */ import_react2.default.createElement("div", { style: { background: bg2, borderRadius: "20px", padding: "20px", width: "320px", boxShadow: "0 10px 40px rgba(0,0,0,0.4)", fontFamily: "system-ui,sans-serif" } }, /* @__PURE__ */ import_react2.default.createElement("h2", { style: { color: accent, textAlign: "center", margin: "0 0 20px" } }, month + " " + year), /* @__PURE__ */ import_react2.default.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "5px" } }, days));
+};
+
+// src/components/CountdownTimer/CountdownTimer.jsx
+var import_react3 = __toESM(require("react"));
+var CountdownTimer = ({
+  targetDate = new Date(Date.now() + 864e5),
+  accent = "#6366f1",
+  bg: bg2 = "#0f172a"
+}) => {
+  const [timeLeft, setTimeLeft] = (0, import_react3.useState)({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  (0, import_react3.useEffect)(() => {
+    const updateTimer = () => {
+      const now = /* @__PURE__ */ new Date();
+      const distance = targetDate - now;
+      const days = Math.floor(distance / (1e3 * 60 * 60 * 24));
+      const hours = Math.floor(distance % (1e3 * 60 * 60 * 24) / (1e3 * 60 * 60));
+      const minutes = Math.floor(distance % (1e3 * 60 * 60) / (1e3 * 60));
+      const seconds = Math.floor(distance % (1e3 * 60) / 1e3);
+      setTimeLeft({ days, hours, minutes, seconds });
+    };
+    const timer = setInterval(updateTimer, 1e3);
+    return () => clearInterval(timer);
+  }, [targetDate]);
+  return /* @__PURE__ */ import_react3.default.createElement("div", { style: { background: bg2, borderRadius: "20px", padding: "24px", width: "320px", color: "#fff", fontFamily: "system-ui,sans-serif", boxShadow: "0 10px 40px rgba(0,0,0,0.5)" } }, /* @__PURE__ */ import_react3.default.createElement("h2", { style: { fontSize: "24px", fontWeight: "700", margin: "0 0 16px" } }, "Countdown Timer"), /* @__PURE__ */ import_react3.default.createElement("div", { style: { display: "flex", justifyContent: "space-between" } }, /* @__PURE__ */ import_react3.default.createElement("div", { style: { textAlign: "center" } }, /* @__PURE__ */ import_react3.default.createElement("div", { style: { fontSize: "20px", fontWeight: "600" } }, timeLeft.days), /* @__PURE__ */ import_react3.default.createElement("div", { style: { fontSize: "12px", color: "rgba(255,255,255,0.6)" } }, "Days")), /* @__PURE__ */ import_react3.default.createElement("div", { style: { textAlign: "center" } }, /* @__PURE__ */ import_react3.default.createElement("div", { style: { fontSize: "20px", fontWeight: "600" } }, timeLeft.hours), /* @__PURE__ */ import_react3.default.createElement("div", { style: { fontSize: "12px", color: "rgba(255,255,255,0.6)" } }, "Hours")), /* @__PURE__ */ import_react3.default.createElement("div", { style: { textAlign: "center" } }, /* @__PURE__ */ import_react3.default.createElement("div", { style: { fontSize: "20px", fontWeight: "600" } }, timeLeft.minutes), /* @__PURE__ */ import_react3.default.createElement("div", { style: { fontSize: "12px", color: "rgba(255,255,255,0.6)" } }, "Minutes")), /* @__PURE__ */ import_react3.default.createElement("div", { style: { textAlign: "center" } }, /* @__PURE__ */ import_react3.default.createElement("div", { style: { fontSize: "20px", fontWeight: "600" } }, timeLeft.seconds), /* @__PURE__ */ import_react3.default.createElement("div", { style: { fontSize: "12px", color: "rgba(255,255,255,0.6)" } }, "Seconds"))));
+};
+
+// src/components/ToggleLight/ToggleLight.jsx
+var import_react4 = __toESM(require("react"));
+var ToggleLight = ({
+  label = "Toggle Light",
+  accent = "#0ea5e9",
+  bg: bg2 = "#0d1117",
+  onToggle = () => {
+  }
+}) => {
+  const [isOn, setIsOn] = (0, import_react4.useState)(false);
+  const alpha = (hex, op) => {
+    const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+    return "rgba(" + r + "," + g + "," + b + "," + op + ")";
+  };
+  const handleToggle = () => {
+    setIsOn((prev) => !prev);
+    onToggle();
+  };
+  return /* @__PURE__ */ import_react4.default.createElement("div", { style: { background: bg2, borderRadius: "20px", padding: "20px", width: "300px", color: "#fff", fontFamily: "system-ui,sans-serif", boxShadow: "0 10px 40px rgba(0,0,0,0.5)", textAlign: "center" } }, /* @__PURE__ */ import_react4.default.createElement("h3", { style: { marginBottom: "10px" } }, label), /* @__PURE__ */ import_react4.default.createElement("button", { onClick: handleToggle, style: {
+    padding: "10px 20px",
+    borderRadius: "10px",
+    border: "none",
+    background: isOn ? accent : alpha(accent, 0.5),
+    color: "#fff",
+    fontSize: "16px",
+    fontWeight: "700",
+    cursor: "pointer",
+    transition: "background 0.3s"
+  } }, isOn ? "Light On" : "Light Off"));
+};
+
+// src/components/DarkToggle/DarkToggle.jsx
+var import_react5 = __toESM(require("react"));
+var DarkToggle = ({
+  initialChecked = false,
+  label = "Toggle Dark Mode",
+  accent = "#6366f1",
+  bg: bg2 = "#0f172a"
+}) => {
+  const [isChecked, setIsChecked] = (0, import_react5.useState)(initialChecked);
+  const alpha = (hex, op) => {
+    const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+    return "rgba(" + r + "," + g + "," + b + "," + op + ")";
+  };
+  return /* @__PURE__ */ import_react5.default.createElement("div", { style: { display: "flex", alignItems: "center", background: bg2, borderRadius: "12px", padding: "10px", width: "300px", boxShadow: "0 10px 40px rgba(0,0,0,0.4)" } }, /* @__PURE__ */ import_react5.default.createElement("label", { style: { color: "#fff", fontSize: "16px", marginRight: "10px" } }, label), /* @__PURE__ */ import_react5.default.createElement("div", { onClick: () => setIsChecked(!isChecked), style: {
+    width: "50px",
+    height: "24px",
+    borderRadius: "12px",
+    background: isChecked ? accent : "rgba(255,255,255,0.1)",
+    position: "relative",
+    cursor: "pointer"
+  } }, /* @__PURE__ */ import_react5.default.createElement("div", { style: {
+    width: "24px",
+    height: "24px",
+    borderRadius: "50%",
+    background: "#fff",
+    position: "absolute",
+    top: "0",
+    left: isChecked ? "26px" : "0",
+    transition: "left 0.3s"
+  } })));
+};
+
+// src/components/Switch/Switch.jsx
+var import_react6 = __toESM(require("react"));
+var Switch = ({
+  isChecked = false,
+  onChange = () => {
+  },
+  accent = "#6366f1",
+  bg: bg2 = "#0f172a"
+}) => {
+  const [checked, setChecked] = (0, import_react6.useState)(isChecked);
+  const toggleSwitch = () => {
+    setChecked(!checked);
+    onChange(!checked);
+  };
+  return /* @__PURE__ */ import_react6.default.createElement("div", { style: { display: "flex", alignItems: "center" } }, /* @__PURE__ */ import_react6.default.createElement(
+    "div",
+    {
+      onClick: toggleSwitch,
+      style: {
+        width: "50px",
+        height: "26px",
+        borderRadius: "13px",
+        background: checked ? accent : "rgba(255,255,255,0.2)",
+        position: "relative",
+        cursor: "pointer",
+        transition: "background 0.3s"
+      }
+    },
+    /* @__PURE__ */ import_react6.default.createElement(
+      "div",
+      {
+        style: {
+          width: "22px",
+          height: "22px",
+          borderRadius: "50%",
+          background: "#fff",
+          position: "absolute",
+          top: "2px",
+          left: checked ? "26px" : "2px",
+          transition: "left 0.3s"
+        }
+      }
+    )
+  ), /* @__PURE__ */ import_react6.default.createElement("span", { style: { marginLeft: "10px", color: "#fff" } }, checked ? "On" : "Off"));
+};
+
+// src/components/Form/Form.jsx
+var import_react7 = __toESM(require("react"));
 var Form = ({
   title = "Subscribe to our newsletter",
   buttonText = "Subscribe",
   accent = "#6366f1",
-  bg = "#0f172a"
+  bg: bg2 = "#0f172a"
 }) => {
-  const [email, setEmail] = (0, import_react.useState)("");
+  const [email, setEmail] = (0, import_react7.useState)("");
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
     return "rgba(" + r + "," + g + "," + b + "," + op + ")";
@@ -64,7 +309,7 @@ var Form = ({
     e.preventDefault();
     alert(`Subscribed with email: ${email}`);
   };
-  return /* @__PURE__ */ import_react.default.createElement("div", { style: { background: bg, borderRadius: "20px", padding: "24px", width: "400px", color: "#fff", fontFamily: "system-ui,sans-serif", boxShadow: "0 10px 40px rgba(0,0,0,0.4)" } }, /* @__PURE__ */ import_react.default.createElement("h2", { style: { fontSize: "18px", fontWeight: "700", marginBottom: "16px" } }, title), /* @__PURE__ */ import_react.default.createElement("form", { onSubmit: handleSubmit, style: { display: "flex", flexDirection: "column" } }, /* @__PURE__ */ import_react.default.createElement(
+  return /* @__PURE__ */ import_react7.default.createElement("div", { style: { background: bg2, borderRadius: "20px", padding: "24px", width: "400px", color: "#fff", fontFamily: "system-ui,sans-serif", boxShadow: "0 10px 40px rgba(0,0,0,0.4)" } }, /* @__PURE__ */ import_react7.default.createElement("h2", { style: { fontSize: "18px", fontWeight: "700", marginBottom: "16px" } }, title), /* @__PURE__ */ import_react7.default.createElement("form", { onSubmit: handleSubmit, style: { display: "flex", flexDirection: "column" } }, /* @__PURE__ */ import_react7.default.createElement(
     "input",
     {
       type: "email",
@@ -82,7 +327,7 @@ var Form = ({
         background: "transparent"
       }
     }
-  ), /* @__PURE__ */ import_react.default.createElement("button", { type: "submit", style: {
+  ), /* @__PURE__ */ import_react7.default.createElement("button", { type: "submit", style: {
     padding: "12px",
     borderRadius: "10px",
     border: "none",
@@ -95,53 +340,53 @@ var Form = ({
 };
 
 // src/components/Toast/Toast.jsx
-var import_react2 = __toESM(require("react"));
+var import_react8 = __toESM(require("react"));
 var Toast = ({
   message = "This is a toast notification!",
   duration = 3e3,
-  bg = "#0d1117",
+  bg: bg2 = "#0d1117",
   color = "#fff",
   accent = "#e11d48"
 }) => {
-  const [visible, setVisible] = (0, import_react2.useState)(false);
-  (0, import_react2.useEffect)(() => {
+  const [visible, setVisible] = (0, import_react8.useState)(false);
+  (0, import_react8.useEffect)(() => {
     setVisible(true);
     const timer = setTimeout(() => setVisible(false), duration);
     return () => clearTimeout(timer);
   }, [duration]);
-  return /* @__PURE__ */ import_react2.default.createElement("div", { style: {
+  return /* @__PURE__ */ import_react8.default.createElement("div", { style: {
     position: "relative",
     width: "300px",
     margin: "20px auto",
     opacity: visible ? 1 : 0,
     transition: "opacity 0.5s ease",
-    background: bg,
+    background: bg2,
     color,
     borderRadius: "10px",
     padding: "16px",
     boxShadow: "0 10px 40px rgba(0,0,0,0.4)",
     display: visible ? "block" : "none"
-  } }, /* @__PURE__ */ import_react2.default.createElement("span", { style: { fontWeight: "600" } }, message));
+  } }, /* @__PURE__ */ import_react8.default.createElement("span", { style: { fontWeight: "600" } }, message));
 };
 
 // src/components/Alert/Alert.jsx
-var import_react3 = __toESM(require("react"));
+var import_react9 = __toESM(require("react"));
 var Alert = ({
   message = "This is an alert message!",
   type = "info",
   accent = "#0ea5e9",
-  bg = "#0d1117",
+  bg: bg2 = "#0d1117",
   onClose = () => {
   }
 }) => {
-  const [visible, setVisible] = (0, import_react3.useState)(true);
+  const [visible, setVisible] = (0, import_react9.useState)(true);
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
     return "rgba(" + r + "," + g + "," + b + "," + op + ")";
   };
   if (!visible) return null;
-  return /* @__PURE__ */ import_react3.default.createElement("div", { style: {
-    background: bg,
+  return /* @__PURE__ */ import_react9.default.createElement("div", { style: {
+    background: bg2,
     borderRadius: "12px",
     padding: "16px",
     margin: "16px 0",
@@ -150,7 +395,7 @@ var Alert = ({
     boxShadow: "0 10px 40px rgba(0,0,0,0.4)",
     border: "1px solid " + alpha(accent, 0.2),
     position: "relative"
-  } }, /* @__PURE__ */ import_react3.default.createElement("span", null, message), /* @__PURE__ */ import_react3.default.createElement(
+  } }, /* @__PURE__ */ import_react9.default.createElement("span", null, message), /* @__PURE__ */ import_react9.default.createElement(
     "button",
     {
       onClick: () => {
@@ -173,7 +418,7 @@ var Alert = ({
 };
 
 // src/components/Pagination/Pagination.jsx
-var import_react4 = __toESM(require("react"));
+var import_react10 = __toESM(require("react"));
 var Pagination = ({
   totalItems = 100,
   itemsPerPage = 10,
@@ -182,7 +427,7 @@ var Pagination = ({
   }
 }) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const [page, setPage] = (0, import_react4.useState)(currentPage);
+  const [page, setPage] = (0, import_react10.useState)(currentPage);
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
     return "rgba(" + r + "," + g + "," + b + "," + op + ")";
@@ -191,7 +436,7 @@ var Pagination = ({
     setPage(newPage);
     onPageChange(newPage);
   };
-  return /* @__PURE__ */ import_react4.default.createElement("div", { style: { display: "flex", justifyContent: "center", alignItems: "center", padding: "20px", background: "#0f172a", borderRadius: "12px", boxShadow: "0 10px 40px rgba(0,0,0,0.4)" } }, /* @__PURE__ */ import_react4.default.createElement("button", { onClick: () => handlePageChange(1), disabled: page === 1, style: {
+  return /* @__PURE__ */ import_react10.default.createElement("div", { style: { display: "flex", justifyContent: "center", alignItems: "center", padding: "20px", background: "#0f172a", borderRadius: "12px", boxShadow: "0 10px 40px rgba(0,0,0,0.4)" } }, /* @__PURE__ */ import_react10.default.createElement("button", { onClick: () => handlePageChange(1), disabled: page === 1, style: {
     padding: "10px 15px",
     borderRadius: "10px",
     background: page === 1 ? alpha("#6366f1", 0.5) : alpha("#6366f1", 1),
@@ -199,7 +444,7 @@ var Pagination = ({
     border: "none",
     cursor: page === 1 ? "not-allowed" : "pointer",
     marginRight: "5px"
-  } }, "First"), /* @__PURE__ */ import_react4.default.createElement("button", { onClick: () => handlePageChange(page - 1), disabled: page === 1, style: {
+  } }, "First"), /* @__PURE__ */ import_react10.default.createElement("button", { onClick: () => handlePageChange(page - 1), disabled: page === 1, style: {
     padding: "10px 15px",
     borderRadius: "10px",
     background: page === 1 ? alpha("#6366f1", 0.5) : alpha("#6366f1", 1),
@@ -207,7 +452,7 @@ var Pagination = ({
     border: "none",
     cursor: page === 1 ? "not-allowed" : "pointer",
     marginRight: "5px"
-  } }, "Previous"), /* @__PURE__ */ import_react4.default.createElement("span", { style: { color: "#fff", margin: "0 10px" } }, page, " / ", totalPages), /* @__PURE__ */ import_react4.default.createElement("button", { onClick: () => handlePageChange(page + 1), disabled: page === totalPages, style: {
+  } }, "Previous"), /* @__PURE__ */ import_react10.default.createElement("span", { style: { color: "#fff", margin: "0 10px" } }, page, " / ", totalPages), /* @__PURE__ */ import_react10.default.createElement("button", { onClick: () => handlePageChange(page + 1), disabled: page === totalPages, style: {
     padding: "10px 15px",
     borderRadius: "10px",
     background: page === totalPages ? alpha("#6366f1", 0.5) : alpha("#6366f1", 1),
@@ -215,7 +460,7 @@ var Pagination = ({
     border: "none",
     cursor: page === totalPages ? "not-allowed" : "pointer",
     marginLeft: "5px"
-  } }, "Next"), /* @__PURE__ */ import_react4.default.createElement("button", { onClick: () => handlePageChange(totalPages), disabled: page === totalPages, style: {
+  } }, "Next"), /* @__PURE__ */ import_react10.default.createElement("button", { onClick: () => handlePageChange(totalPages), disabled: page === totalPages, style: {
     padding: "10px 15px",
     borderRadius: "10px",
     background: page === totalPages ? alpha("#6366f1", 0.5) : alpha("#6366f1", 1),
@@ -227,15 +472,15 @@ var Pagination = ({
 };
 
 // src/components/Tabs/Tabs.jsx
-var import_react5 = __toESM(require("react"));
+var import_react11 = __toESM(require("react"));
 var Tabs = ({
   tabs = ["Tab 1", "Tab 2", "Tab 3"],
   content = ["Content for Tab 1", "Content for Tab 2", "Content for Tab 3"],
   accent = "#6366f1",
-  bg = "#0f172a"
+  bg: bg2 = "#0f172a"
 }) => {
-  const [activeIndex, setActiveIndex] = (0, import_react5.useState)(0);
-  return /* @__PURE__ */ import_react5.default.createElement("div", { style: { background: bg, borderRadius: "20px", width: "400px", boxShadow: "0 10px 40px rgba(0,0,0,0.4)" } }, /* @__PURE__ */ import_react5.default.createElement("div", { style: { display: "flex", borderBottom: "1px solid rgba(255,255,255,0.08)" } }, tabs.map((tab, index) => /* @__PURE__ */ import_react5.default.createElement(
+  const [activeIndex, setActiveIndex] = (0, import_react11.useState)(0);
+  return /* @__PURE__ */ import_react11.default.createElement("div", { style: { background: bg2, borderRadius: "20px", width: "400px", boxShadow: "0 10px 40px rgba(0,0,0,0.4)" } }, /* @__PURE__ */ import_react11.default.createElement("div", { style: { display: "flex", borderBottom: "1px solid rgba(255,255,255,0.08)" } }, tabs.map((tab, index) => /* @__PURE__ */ import_react11.default.createElement(
     "button",
     {
       key: index,
@@ -253,31 +498,31 @@ var Tabs = ({
       }
     },
     tab
-  ))), /* @__PURE__ */ import_react5.default.createElement("div", { style: { padding: "20px", color: "#fff" } }, content[activeIndex]));
+  ))), /* @__PURE__ */ import_react11.default.createElement("div", { style: { padding: "20px", color: "#fff" } }, content[activeIndex]));
 };
 
 // src/components/Breadcrumb/Breadcrumb.jsx
-var import_react6 = __toESM(require("react"));
+var import_react12 = __toESM(require("react"));
 var Breadcrumb = ({
   items = [{ name: "Home", link: "#" }, { name: "Library", link: "#" }, { name: "Data", link: "#" }],
   separator = ">",
-  bg = "#0f172a",
+  bg: bg2 = "#0f172a",
   textColor = "#fff",
   separatorColor = "#6366f1"
 }) => {
-  return /* @__PURE__ */ import_react6.default.createElement("nav", { style: { background: bg, padding: "12px 20px", borderRadius: "12px", color: textColor, fontFamily: "system-ui,sans-serif" } }, items.map((item, index) => /* @__PURE__ */ import_react6.default.createElement("span", { key: index, style: { display: "inline-flex", alignItems: "center" } }, /* @__PURE__ */ import_react6.default.createElement("a", { href: item.link, style: { color: textColor, textDecoration: "none" } }, item.name), index < items.length - 1 && /* @__PURE__ */ import_react6.default.createElement("span", { style: { margin: "0 8px", color: separatorColor } }, separator))));
+  return /* @__PURE__ */ import_react12.default.createElement("nav", { style: { background: bg2, padding: "12px 20px", borderRadius: "12px", color: textColor, fontFamily: "system-ui,sans-serif" } }, items.map((item, index) => /* @__PURE__ */ import_react12.default.createElement("span", { key: index, style: { display: "inline-flex", alignItems: "center" } }, /* @__PURE__ */ import_react12.default.createElement("a", { href: item.link, style: { color: textColor, textDecoration: "none" } }, item.name), index < items.length - 1 && /* @__PURE__ */ import_react12.default.createElement("span", { style: { margin: "0 8px", color: separatorColor } }, separator))));
 };
 
 // src/components/Toggle/Toggle.jsx
-var import_react7 = __toESM(require("react"));
+var import_react13 = __toESM(require("react"));
 var Toggle = ({
   isOn = false,
   onToggle = () => {
   },
   accent = "#6366f1",
-  bg = "#0f172a"
+  bg: bg2 = "#0f172a"
 }) => {
-  const [isActive, setIsActive] = (0, import_react7.useState)(isOn);
+  const [isActive, setIsActive] = (0, import_react13.useState)(isOn);
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
     return "rgba(" + r + "," + g + "," + b + "," + op + ")";
@@ -286,10 +531,10 @@ var Toggle = ({
     setIsActive(!isActive);
     onToggle(!isActive);
   };
-  return /* @__PURE__ */ import_react7.default.createElement("div", { style: {
+  return /* @__PURE__ */ import_react13.default.createElement("div", { style: {
     display: "flex",
     alignItems: "center",
-    background: bg,
+    background: bg2,
     borderRadius: "12px",
     padding: "6px",
     cursor: "pointer",
@@ -297,7 +542,7 @@ var Toggle = ({
     height: "30px",
     boxShadow: "0 4px 14px rgba(0,0,0,0.3)",
     transition: "background 0.3s"
-  }, onClick: handleToggle }, /* @__PURE__ */ import_react7.default.createElement("div", { style: {
+  }, onClick: handleToggle }, /* @__PURE__ */ import_react13.default.createElement("div", { style: {
     width: "24px",
     height: "24px",
     borderRadius: "50%",
@@ -308,7 +553,7 @@ var Toggle = ({
 };
 
 // src/components/Accordion/Accordion.jsx
-var import_react8 = __toESM(require("react"));
+var import_react14 = __toESM(require("react"));
 var Accordion = ({
   items = [
     { title: "Section 1", content: "Content for section 1." },
@@ -316,45 +561,45 @@ var Accordion = ({
     { title: "Section 3", content: "Content for section 3." }
   ],
   accent = "#6366f1",
-  bg = "#0f172a"
+  bg: bg2 = "#0f172a"
 }) => {
-  const [openIndex, setOpenIndex] = (0, import_react8.useState)(-1);
+  const [openIndex, setOpenIndex] = (0, import_react14.useState)(-1);
   const toggleSection = (index) => {
     setOpenIndex(openIndex === index ? -1 : index);
   };
-  return /* @__PURE__ */ import_react8.default.createElement("div", { style: { background: bg, borderRadius: "20px", boxShadow: "0 10px 40px rgba(0,0,0,0.5)", overflow: "hidden", width: "400px" } }, items.map((item, index) => /* @__PURE__ */ import_react8.default.createElement("div", { key: index, style: { borderBottom: "1px solid rgba(255,255,255,0.08)" } }, /* @__PURE__ */ import_react8.default.createElement(
+  return /* @__PURE__ */ import_react14.default.createElement("div", { style: { background: bg2, borderRadius: "20px", boxShadow: "0 10px 40px rgba(0,0,0,0.5)", overflow: "hidden", width: "400px" } }, items.map((item, index) => /* @__PURE__ */ import_react14.default.createElement("div", { key: index, style: { borderBottom: "1px solid rgba(255,255,255,0.08)" } }, /* @__PURE__ */ import_react14.default.createElement(
     "div",
     {
       onClick: () => toggleSection(index),
       style: {
         padding: "16px",
         cursor: "pointer",
-        background: openIndex === index ? accent : bg,
+        background: openIndex === index ? accent : bg2,
         color: openIndex === index ? "#fff" : "#fff",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center"
       }
     },
-    /* @__PURE__ */ import_react8.default.createElement("span", { style: { fontWeight: "700" } }, item.title),
-    /* @__PURE__ */ import_react8.default.createElement("span", { style: { fontSize: "14px" } }, openIndex === index ? "-" : "+")
-  ), openIndex === index && /* @__PURE__ */ import_react8.default.createElement("div", { style: { padding: "16px", background: "rgba(255,255,255,0.05)" } }, item.content))));
+    /* @__PURE__ */ import_react14.default.createElement("span", { style: { fontWeight: "700" } }, item.title),
+    /* @__PURE__ */ import_react14.default.createElement("span", { style: { fontSize: "14px" } }, openIndex === index ? "-" : "+")
+  ), openIndex === index && /* @__PURE__ */ import_react14.default.createElement("div", { style: { padding: "16px", background: "rgba(255,255,255,0.05)" } }, item.content))));
 };
 
 // src/components/ProgressBar/ProgressBar.jsx
-var import_react9 = __toESM(require("react"));
+var import_react15 = __toESM(require("react"));
 var ProgressBar = ({
   progress = 0,
   height = 20,
-  bg = "#0f172a",
+  bg: bg2 = "#0f172a",
   accent = "#6366f1"
 }) => {
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
     return "rgba(" + r + "," + g + "," + b + "," + op + ")";
   };
-  const [currentProgress, setCurrentProgress] = (0, import_react9.useState)(progress);
-  (0, import_react9.useEffect)(() => {
+  const [currentProgress, setCurrentProgress] = (0, import_react15.useState)(progress);
+  (0, import_react15.useEffect)(() => {
     const interval = setInterval(() => {
       setCurrentProgress((oldProgress) => {
         if (oldProgress < 100) {
@@ -367,7 +612,7 @@ var ProgressBar = ({
     }, 100);
     return () => clearInterval(interval);
   }, []);
-  return /* @__PURE__ */ import_react9.default.createElement("div", { style: { background: bg, borderRadius: "10px", width: "100%", height: height + "px", overflow: "hidden" } }, /* @__PURE__ */ import_react9.default.createElement("div", { style: {
+  return /* @__PURE__ */ import_react15.default.createElement("div", { style: { background: bg2, borderRadius: "10px", width: "100%", height: height + "px", overflow: "hidden" } }, /* @__PURE__ */ import_react15.default.createElement("div", { style: {
     width: currentProgress + "%",
     background: accent,
     height: "100%",
@@ -376,33 +621,33 @@ var ProgressBar = ({
 };
 
 // src/components/Tooltip/Tooltip.jsx
-var import_react10 = __toESM(require("react"));
+var import_react16 = __toESM(require("react"));
 var Tooltip = ({
   text = "Tooltip text",
   position = "top",
   accent = "#6366f1",
-  bg = "#0f172a",
-  children = /* @__PURE__ */ import_react10.default.createElement("span", { style: { color: "#6366f1" } }, "Hover me")
+  bg: bg2 = "#0f172a",
+  children = /* @__PURE__ */ import_react16.default.createElement("span", { style: { color: "#6366f1" } }, "Hover me")
 }) => {
-  const [visible, setVisible] = (0, import_react10.useState)(false);
+  const [visible, setVisible] = (0, import_react16.useState)(false);
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
     return "rgba(" + r + "," + g + "," + b + "," + op + ")";
   };
-  return /* @__PURE__ */ import_react10.default.createElement("div", { style: { position: "relative", display: "inline-block" } }, /* @__PURE__ */ import_react10.default.createElement(
+  return /* @__PURE__ */ import_react16.default.createElement("div", { style: { position: "relative", display: "inline-block" } }, /* @__PURE__ */ import_react16.default.createElement(
     "div",
     {
       onMouseEnter: () => setVisible(true),
       onMouseLeave: () => setVisible(false)
     },
     children
-  ), visible && /* @__PURE__ */ import_react10.default.createElement("div", { style: {
+  ), visible && /* @__PURE__ */ import_react16.default.createElement("div", { style: {
     position: "absolute",
     bottom: position === "top" ? "100%" : "auto",
     top: position === "bottom" ? "100%" : "auto",
     left: "50%",
     transform: "translateX(-50%)",
-    background: bg,
+    background: bg2,
     color: "#fff",
     padding: "8px 12px",
     borderRadius: "10px",
@@ -414,7 +659,7 @@ var Tooltip = ({
 };
 
 // src/components/Avatar/Avatar.jsx
-var import_react11 = __toESM(require("react"));
+var import_react17 = __toESM(require("react"));
 var Avatar = ({
   imageUrl = "https://via.placeholder.com/150",
   size = "60px",
@@ -426,7 +671,7 @@ var Avatar = ({
     const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
     return "rgba(" + r + "," + g + "," + b + "," + op + ")";
   };
-  return /* @__PURE__ */ import_react11.default.createElement("div", { style: {
+  return /* @__PURE__ */ import_react17.default.createElement("div", { style: {
     width: size,
     height: size,
     borderRadius: "50%",
@@ -437,15 +682,15 @@ var Avatar = ({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: alpha(borderColor, 0.1)
-  } }, /* @__PURE__ */ import_react11.default.createElement("img", { src: imageUrl, alt: altText, style: { width: "100%", height: "100%", objectFit: "cover" } }));
+  } }, /* @__PURE__ */ import_react17.default.createElement("img", { src: imageUrl, alt: altText, style: { width: "100%", height: "100%", objectFit: "cover" } }));
 };
 
 // src/components/Badge/Badge.jsx
-var import_react12 = __toESM(require("react"));
+var import_react18 = __toESM(require("react"));
 var Badge = ({
   label = "New",
   accent = "#e11d48",
-  bg = "#0f172a",
+  bg: bg2 = "#0f172a",
   size = "medium"
 }) => {
   const sizes = {
@@ -453,7 +698,7 @@ var Badge = ({
     medium: { padding: "4px 10px", fontSize: "14px" },
     large: { padding: "6px 12px", fontSize: "16px" }
   };
-  return /* @__PURE__ */ import_react12.default.createElement("span", { style: {
+  return /* @__PURE__ */ import_react18.default.createElement("span", { style: {
     background: accent,
     color: "#fff",
     borderRadius: "10px",
@@ -466,28 +711,28 @@ var Badge = ({
 };
 
 // src/components/NotificationCard/NotificationCard.jsx
-var import_react13 = __toESM(require("react"));
+var import_react19 = __toESM(require("react"));
 var NotificationCard = ({
   title = "New Message",
   message = "You have received a new message from John.",
   time = "2 hours ago",
   accent = "#0ea5e9",
-  bg = "#0d1117",
+  bg: bg2 = "#0d1117",
   onDismiss = () => {
   }
 }) => {
-  const [hovered, setHovered] = (0, import_react13.useState)(false);
+  const [hovered, setHovered] = (0, import_react19.useState)(false);
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
     return "rgba(" + r + "," + g + "," + b + "," + op + ")";
   };
-  return /* @__PURE__ */ import_react13.default.createElement(
+  return /* @__PURE__ */ import_react19.default.createElement(
     "div",
     {
       onMouseEnter: () => setHovered(true),
       onMouseLeave: () => setHovered(false),
       style: {
-        background: bg,
+        background: bg2,
         borderRadius: "16px",
         padding: "16px",
         width: "300px",
@@ -498,10 +743,10 @@ var NotificationCard = ({
         transform: hovered ? "translateY(-4px)" : "translateY(0px)"
       }
     },
-    /* @__PURE__ */ import_react13.default.createElement("h3", { style: { fontSize: "16px", fontWeight: "700", margin: "0 0 8px" } }, title),
-    /* @__PURE__ */ import_react13.default.createElement("p", { style: { fontSize: "14px", color: "rgba(255,255,255,0.75)", margin: "0 0 8px" } }, message),
-    /* @__PURE__ */ import_react13.default.createElement("span", { style: { fontSize: "12px", color: "rgba(255,255,255,0.5)" } }, time),
-    /* @__PURE__ */ import_react13.default.createElement("button", { onClick: onDismiss, style: {
+    /* @__PURE__ */ import_react19.default.createElement("h3", { style: { fontSize: "16px", fontWeight: "700", margin: "0 0 8px" } }, title),
+    /* @__PURE__ */ import_react19.default.createElement("p", { style: { fontSize: "14px", color: "rgba(255,255,255,0.75)", margin: "0 0 8px" } }, message),
+    /* @__PURE__ */ import_react19.default.createElement("span", { style: { fontSize: "12px", color: "rgba(255,255,255,0.5)" } }, time),
+    /* @__PURE__ */ import_react19.default.createElement("button", { onClick: onDismiss, style: {
       marginTop: "12px",
       padding: "8px 16px",
       borderRadius: "10px",
@@ -516,7 +761,7 @@ var NotificationCard = ({
 };
 
 // src/components/BlogCard/BlogCard.jsx
-var import_react14 = __toESM(require("react"));
+var import_react20 = __toESM(require("react"));
 var BlogCard = ({
   title = "Exploring the Depths of the Ocean",
   excerpt = "A journey into the mysteries of the underwater world.",
@@ -524,7 +769,7 @@ var BlogCard = ({
   date = "October 1, 2023",
   image = "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=600&q=80",
   accent = "#0ea5e9",
-  bg = "#0f172a",
+  bg: bg2 = "#0f172a",
   onClick = () => {
   }
 }) => {
@@ -532,8 +777,8 @@ var BlogCard = ({
     const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
     return "rgba(" + r + "," + g + "," + b + "," + op + ")";
   };
-  return /* @__PURE__ */ import_react14.default.createElement("div", { style: {
-    background: bg,
+  return /* @__PURE__ */ import_react20.default.createElement("div", { style: {
+    background: bg2,
     borderRadius: "20px",
     overflow: "hidden",
     width: "320px",
@@ -541,25 +786,25 @@ var BlogCard = ({
     boxShadow: "0 10px 40px rgba(0,0,0,0.4)",
     border: "1px solid rgba(255,255,255,0.08)",
     transition: "transform 0.2s, box-shadow 0.2s"
-  }, onClick }, /* @__PURE__ */ import_react14.default.createElement("div", { style: { position: "relative", width: "100%", height: "180px" } }, /* @__PURE__ */ import_react14.default.createElement("img", { src: image, alt: title, style: { width: "100%", height: "100%", objectFit: "cover" } })), /* @__PURE__ */ import_react14.default.createElement("div", { style: { padding: "16px" } }, /* @__PURE__ */ import_react14.default.createElement("h3", { style: { fontSize: "18px", fontWeight: "700", color: "#fff", margin: "0 0 8px" } }, title), /* @__PURE__ */ import_react14.default.createElement("p", { style: { fontSize: "14px", color: "rgba(255,255,255,0.6)", margin: "0 0 8px" } }, excerpt), /* @__PURE__ */ import_react14.default.createElement("div", { style: { fontSize: "12px", color: "rgba(255,255,255,0.45)" } }, author, " - ", date)));
+  }, onClick }, /* @__PURE__ */ import_react20.default.createElement("div", { style: { position: "relative", width: "100%", height: "180px" } }, /* @__PURE__ */ import_react20.default.createElement("img", { src: image, alt: title, style: { width: "100%", height: "100%", objectFit: "cover" } })), /* @__PURE__ */ import_react20.default.createElement("div", { style: { padding: "16px" } }, /* @__PURE__ */ import_react20.default.createElement("h3", { style: { fontSize: "18px", fontWeight: "700", color: "#fff", margin: "0 0 8px" } }, title), /* @__PURE__ */ import_react20.default.createElement("p", { style: { fontSize: "14px", color: "rgba(255,255,255,0.6)", margin: "0 0 8px" } }, excerpt), /* @__PURE__ */ import_react20.default.createElement("div", { style: { fontSize: "12px", color: "rgba(255,255,255,0.45)" } }, author, " - ", date)));
 };
 
 // src/components/TestimonialCard/TestimonialCard.jsx
-var import_react15 = __toESM(require("react"));
+var import_react21 = __toESM(require("react"));
 var TestimonialCard = ({
   image = "https://images.unsplash.com/photo-1506794778163-1a0a4a14b2d0?w=400&q=80",
   name = "John Doe",
   title = "CEO of Company",
   testimonial = "This service has greatly improved our workflow and efficiency, and I couldn't be happier with the results!",
   accent = "#6366f1",
-  bg = "#0f172a"
+  bg: bg2 = "#0f172a"
 }) => {
   const alpha = (hex, op) => {
     const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
     return "rgba(" + r + "," + g + "," + b + "," + op + ")";
   };
-  return /* @__PURE__ */ import_react15.default.createElement("div", { style: {
-    background: bg,
+  return /* @__PURE__ */ import_react21.default.createElement("div", { style: {
+    background: bg2,
     borderRadius: "20px",
     padding: "24px",
     width: "300px",
@@ -567,7 +812,7 @@ var TestimonialCard = ({
     fontFamily: "system-ui,sans-serif",
     boxShadow: "0 10px 40px rgba(0,0,0,0.4)",
     position: "relative"
-  } }, /* @__PURE__ */ import_react15.default.createElement("div", { style: { display: "flex", alignItems: "center", marginBottom: "16px" } }, /* @__PURE__ */ import_react15.default.createElement("img", { src: image, alt: name, style: { width: "50px", height: "50px", borderRadius: "50%", marginRight: "12px" } }), /* @__PURE__ */ import_react15.default.createElement("div", null, /* @__PURE__ */ import_react15.default.createElement("h4", { style: { margin: "0", fontSize: "16px", fontWeight: "700" } }, name), /* @__PURE__ */ import_react15.default.createElement("p", { style: { margin: "0", fontSize: "12px", color: "rgba(255,255,255,0.6)" } }, title))), /* @__PURE__ */ import_react15.default.createElement("p", { style: { fontSize: "14px", lineHeight: 1.5, color: "rgba(255,255,255,0.85)" } }, testimonial), /* @__PURE__ */ import_react15.default.createElement("div", { style: { position: "absolute", bottom: "20px", right: "20px", width: "40px", height: "40px", borderRadius: "50%", background: alpha(accent, 0.1), display: "flex", alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react15.default.createElement("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: accent, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, /* @__PURE__ */ import_react15.default.createElement("path", { d: "M3 12l2 2 4-4m12 0l-2 2-4-4" }))));
+  } }, /* @__PURE__ */ import_react21.default.createElement("div", { style: { display: "flex", alignItems: "center", marginBottom: "16px" } }, /* @__PURE__ */ import_react21.default.createElement("img", { src: image, alt: name, style: { width: "50px", height: "50px", borderRadius: "50%", marginRight: "12px" } }), /* @__PURE__ */ import_react21.default.createElement("div", null, /* @__PURE__ */ import_react21.default.createElement("h4", { style: { margin: "0", fontSize: "16px", fontWeight: "700" } }, name), /* @__PURE__ */ import_react21.default.createElement("p", { style: { margin: "0", fontSize: "12px", color: "rgba(255,255,255,0.6)" } }, title))), /* @__PURE__ */ import_react21.default.createElement("p", { style: { fontSize: "14px", lineHeight: 1.5, color: "rgba(255,255,255,0.85)" } }, testimonial), /* @__PURE__ */ import_react21.default.createElement("div", { style: { position: "absolute", bottom: "20px", right: "20px", width: "40px", height: "40px", borderRadius: "50%", background: alpha(accent, 0.1), display: "flex", alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react21.default.createElement("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: accent, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, /* @__PURE__ */ import_react21.default.createElement("path", { d: "M3 12l2 2 4-4m12 0l-2 2-4-4" }))));
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
@@ -577,13 +822,19 @@ var TestimonialCard = ({
   Badge,
   BlogCard,
   Breadcrumb,
+  Calculator,
+  Calendar,
+  CountdownTimer,
+  DarkToggle,
   Form,
   NotificationCard,
   Pagination,
   ProgressBar,
+  Switch,
   Tabs,
   TestimonialCard,
   Toast,
   Toggle,
+  ToggleLight,
   Tooltip
 });
