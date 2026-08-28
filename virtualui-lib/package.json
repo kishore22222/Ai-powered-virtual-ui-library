@@ -1,6 +1,6 @@
 {
-  "name": "kishore-virtual-ui-library",
-  "version": "1.0.22",
+  "name": "virtualui-components-lib",
+  "version": "1.0.23",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "files": [
