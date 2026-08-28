@@ -2,7 +2,7 @@
  * sync.js
  *
  * Regenerates the component sources of the published npm package
- * (kishore-virtual-ui-library) from the live VirtualUI platform API.
+ * (virtualui-components-lib) from the live VirtualUI platform API.
  *
  *  1. Cleans src/components/ and recreates it.
  *  2. Fetches all PUBLIC components from the API.

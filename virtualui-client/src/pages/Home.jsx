@@ -61,7 +61,7 @@ const steps = [
   {
     n: "01",
     title: "Install Library",
-    text: "npm install kishore-virtual-ui-library to access all prebuilt UI components.",
+    text: "npm install virtualui-components-lib to access all prebuilt UI components.",
   },
   {
     n: "02",
@@ -122,7 +122,7 @@ useEffect(()=>{
     navigate("/");
   };
   const handleCopy = () => {
-    navigator.clipboard.writeText("npm install kishore-virtual-ui-library");
+    navigator.clipboard.writeText("npm install virtualui-components-lib");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -404,7 +404,7 @@ useEffect(()=>{
           >
             <span className="text-[#3be8ff]">$</span>
             <span className="text-white/80 truncate">
-              npm install kishore-virtual-ui-library
+              npm install virtualui-components-lib
             </span>
             <button
               onClick={handleCopy}
@@ -478,7 +478,7 @@ useEffect(()=>{
               <span className="text-[#3be8ff]/60">import</span>{" "}
               <span className="text-white/80">{"{Button,Card} "}</span>
               <span className="text-[#3be8ff]/60 ">from</span>{" "}
-              <span className="text-[#aaff80] ">kishore-virtual-ui-library</span>{" "}
+              <span className="text-[#aaff80] ">virtualui-components-lib</span>{" "}
               <span className="text-white/30">;</span>
             </p>
             <p> </p>

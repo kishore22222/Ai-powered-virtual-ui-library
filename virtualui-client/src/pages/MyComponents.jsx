@@ -113,9 +113,9 @@ function GuidePanel() {
 
 function DetailPanel({ component, onBack }) {
   const [activeTab, setActiveTab] = useState("preview");
-  const importCode = `import { ${component.name} } from "kishore-virtual-ui-library";`;
+  const importCode = `import { ${component.name} } from "virtualui-components-lib";`;
 
-  const usageCode = `import { ${component.name} } from "kishore-virtual-ui-library";
+  const usageCode = `import { ${component.name} } from "virtualui-components-lib";
 
 export default function App() {
   return (
@@ -233,7 +233,7 @@ export default function App() {
                 <p className="text-xs text-white/40 font-semibold uppercase tracking-widest">
                   Install
                 </p>
-                <CodeBlock code="npm install kishore-virtual-ui-library" lang="bash" />
+                <CodeBlock code="npm install virtualui-components-lib" lang="bash" />
               </div>
               <div className="space-y-3">
                 <p className="text-xs text-white/40 font-semibold uppercase tracking-widest">

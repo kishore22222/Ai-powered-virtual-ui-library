@@ -132,7 +132,7 @@ function GuidePanel() {
               Install the package
             </p>
             <CodeBlock
-              code={`npm install kishore-virtual-ui-library`}
+              code={`npm install virtualui-components-lib`}
               lang="bash"
             />
           </div>
@@ -143,7 +143,7 @@ function GuidePanel() {
               Import Your Component
             </p>
             <CodeBlock
-              code={`import {componentName} from  kishore-virtual-ui-library`}
+              code={`import {componentName} from  virtualui-components-lib`}
               lang="jsx"
             />
           </div>
@@ -153,7 +153,7 @@ function GuidePanel() {
               Use in your App.jsx
             </p>
             <CodeBlock
-              code={`import { UserAvatar, PricingCard } from "virtual-ui-library";
+              code={`import { UserAvatar, PricingCard } from "virtualui-components-lib";
 
 export default function App() {
   return (
@@ -176,9 +176,9 @@ export default function App() {
 }
 function DetailPanel({ component, onBack }) {
   const [activeTab, setActiveTab] = useState("preview");
-  const importCode = `import { ${component.name} } from "kishore-virtual-ui-library";`;
+  const importCode = `import { ${component.name} } from "virtualui-components-lib";`;
 
-  const usageCode = `import { ${component.name} } from "kishore-virtual-ui-library";
+  const usageCode = `import { ${component.name} } from "virtualui-components-lib";
 
 export default function App() {
   return (
@@ -329,7 +329,7 @@ export default function App() {
                   <TbBrandNpm size={13} /> Install
                 </div>
                 <CodeBlock
-                  code={`npm install kishore-virtual-ui-library`}
+                  code={`npm install virtualui-components-lib`}
                   lang="jsx"
                 />
               </div>

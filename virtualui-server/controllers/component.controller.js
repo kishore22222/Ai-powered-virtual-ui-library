@@ -63,7 +63,7 @@ export const publishComponent = async (req, res) => {
         }
 
         component.visibility = "public"
-        component.npm = "kishore-virtual-ui-library"
+        component.npm = "virtualui-components-lib"
         await component.save()
 
         // Trigger the GitHub Actions workflow (publish.yml) to rebuild + republish
