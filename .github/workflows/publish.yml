@@ -35,11 +35,13 @@ jobs:
 
       - name: Build
         working-directory: virtualui-lib
-        run: npx tsup
+        run: |
+          chmod +x node_modules/.bin/tsup
+          node_modules/.bin/tsup
 
       - name: Publish to npm
         working-directory: virtualui-lib
-        run: npm publish
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -48,5 +50,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add virtualui-lib/package.json virtualui-lib/package-lock.json
-          git commit -m "chore: bump kishore-virtual-ui-library version [skip ci]"
+          git commit -m "chore: bump virtualui-components-lib version [skip ci]"
           git push
