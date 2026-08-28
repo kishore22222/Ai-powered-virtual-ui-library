@@ -1,6 +1,10 @@
 {
   "name": "virtualui-components-lib",
+<<<<<<< Updated upstream
   "version": "1.0.27",
+=======
+  "version": "1.0.26",
+>>>>>>> Stashed changes
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "files": [
