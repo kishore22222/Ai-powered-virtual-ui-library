@@ -1,0 +1,52 @@
+name: Publish Virtual UI Library
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        working-directory: virtualui-lib
+        run: npm ci
+
+      - name: Sync components from API
+        working-directory: virtualui-lib
+        run: node sync.js
+        env:
+          COMPONENTS_API_URL: ${{ secrets.COMPONENTS_API_URL }}
+
+      - name: Bump patch version
+        working-directory: virtualui-lib
+        run: npm version patch --no-git-tag-version
+
+      - name: Build
+        working-directory: virtualui-lib
+        run: npm run build
+
+      - name: Publish to npm
+        working-directory: virtualui-lib
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Commit version bump back
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add virtualui-lib/package.json virtualui-lib/package-lock.json
+          git commit -m "chore: bump kishore-virtual-ui-library version [skip ci]"
+          git push
