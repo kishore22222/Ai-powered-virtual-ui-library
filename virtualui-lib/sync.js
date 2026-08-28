@@ -54,7 +54,7 @@ async function main() {
 
   let components = [];
   try {
-    const res = await fetch(API_URL);
+    const res = await fetch(API_URL, { signal: AbortSignal.timeout(90_000) });
     if (res.ok) {
       components = await res.json();
     } else if (res.status !== 404) {

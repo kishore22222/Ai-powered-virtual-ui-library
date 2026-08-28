@@ -69,31 +69,37 @@ export const publishComponent = async (req, res) => {
         // Trigger the GitHub Actions workflow (publish.yml) to rebuild + republish
         // the npm package. The component must be "public" BEFORE dispatching,
         // because the workflow's sync.js only fetches public components.
-        if (process.env.GITHUB_PAT) {
-            try {
-                await axios.post(
-                    "https://api.github.com/repos/kishore22222/Ai-powered-virtual-ui-library/actions/workflows/publish.yml/dispatches",
-                    { ref: "main" },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${process.env.GITHUB_PAT}`,
-                            Accept: "application/vnd.github+json",
-                            "X-GitHub-Api-Version": "2022-11-28",
-                        },
-                    }
-                )
-            } catch (triggerError) {
-                console.error("Failed to trigger GitHub Actions publish:", triggerError?.response?.data || triggerError.message)
-                return res.status(500).json({
-                    message: "Component is now public, but failed to trigger the npm build. Check the GITHUB_PAT environment variable.",
-                    error: triggerError?.response?.data?.message || triggerError.message,
-                })
-            }
-        } else {
-            console.warn("GITHUB_PAT is not set — component saved as public but npm publish was NOT triggered.")
+        if (!process.env.GITHUB_PAT) {
+            const msg = "Component is now public, but npm publish was NOT triggered because GITHUB_PAT is missing on the server."
+            console.error(msg)
+            return res.status(500).json({
+                message: msg,
+                hint: "Add GITHUB_PAT (GitHub classic PAT with 'repo' + 'workflow' scopes) to the Render env vars, then publish the component again.",
+            })
         }
 
-        return res.status(200).json({ message: "Component published successfully. npm publish triggered." })
+        try {
+            await axios.post(
+                "https://api.github.com/repos/kishore22222/Ai-powered-virtual-ui-library/actions/workflows/publish.yml/dispatches",
+                { ref: "main" },
+                {
+                    headers: {
+                        Authorization: `Bearer ${process.env.GITHUB_PAT}`,
+                        Accept: "application/vnd.github+json",
+                        "X-GitHub-Api-Version": "2022-11-28",
+                    },
+                }
+            )
+        } catch (triggerError) {
+            const gh = triggerError?.response?.data
+            console.error("GitHub Actions dispatch failed:", JSON.stringify(gh || triggerError.message))
+            return res.status(500).json({
+                message: "Component is now public, but failed to trigger the GitHub Actions build.",
+                error: gh?.message || triggerError.message,
+            })
+        }
+
+        return res.status(200).json({ message: "Component published successfully. GitHub Actions build triggered — monitor the Actions tab for the npm publish to complete." })
 
     } catch (error) {
         console.log(error)
